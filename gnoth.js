@@ -1,6 +1,5 @@
 (function () {
 
-    //var settings;
     var key = 'lastSettings';
 
     var fillDefaultSettings = function (settings) {
@@ -9,38 +8,33 @@
         settings.him = settings.him || "om";
         settings.her = settings.her || "om";
         settings.his = settings.his || "oz";
-        settings.hers = settings.his || "her";
+        settings.hers = settings.hers || "her";
         return settings;
     }
 
     // get user's last choices from storage
-    var getSettings = new Promise(function (resolve, reject) {
-        if (chrome.storage) {
-            chrome.storage.sync.get([key], function (result) {
-                console.log('Value currently is ' + JSON.stringify(result));
-                console.log('Value currently is ' + result.key);
-                // fill in with default values if previous user choices
-                // do not exist
-                settings = fillDefaultSettings(result || {});
-                resolve(result);
-            });
-        }
-        else {
-            settings = fillDefaultSettings({});
-            resolve(settings);
-        }
-    });
+    var getSettings = function () {
+        return new Promise(function (resolve, reject) {
+            if (chrome.storage) {
+                chrome.storage.sync.get(key, function (result) {
+                    if (chrome.runtime.error) {
+                        alert("Runtime error.");
+                        console.log("Runtime error.");
+                    }
+                    // fill in with default values if previous user choices
+                    // do not exist
+                    settings = fillDefaultSettings(result.lastSettings || {});
+                    //alert(JSON.stringify(settings));
+                    resolve(settings);
+                });
+            }
+            else {
+                settings = fillDefaultSettings({});
+                resolve(settings);
+            }
+        });
+    }
 
-    //var getSettings = function (callback) {
-    //    chrome.storage.sync.get([key], function (result) {
-    //        console.log('Value currently is ' + JSON.stringify(result));
-    //        console.log('Value currently is ' + result.key);
-    //        settings = fillDefaultSettings(result);
-    //        if (callback) {
-    //            callback(result);
-    //        }
-    //    });
-    //};
 
     // Fill text boxes with initial values. User can then
     // change those values as desired.
@@ -56,8 +50,13 @@
     // store the user's choices for next time
     var setSettings = function (newSettings) {
         if (chrome.storage) {
-            chrome.storage.sync.set({ key: newSettings }, function () {
-                console.log('Value is set to ' + JSON.stringify(newSettings));
+            chrome.storage.sync.set({ 'lastSettings': newSettings }, function () {
+                //alert(JSON.stringify(newSettings));
+                if (chrome.runtime.error) {
+                    alert("Runtime error.");
+                    console.log("Runtime error.");
+                }
+                //console.log('Value is set to ' + JSON.stringify(newSettings));
             });
         }
     };
@@ -72,7 +71,7 @@
         var hersReplacement = document.getElementById('HersReplacement').value;
         var g = {
             he: heReplacement, him: himReplacement, his: hisReplacement,
-            she: heReplacement, her: himReplacement, hers: hisReplacement,
+            she: sheReplacement, her: herReplacement, hers: hersReplacement,
         };
         return g;
     }
@@ -87,16 +86,29 @@
             chrome.tabs.executeScript(null, {
                 code: 'var gnoth = {}; gnoth.g = ' + JSON.stringify(g) + ';'
             }, function () {
-                chrome.tabs.executeScript(null, { file: 'gnoth-inject.js' });
+                chrome.tabs.executeScript(null, { file: 'gnoth-inject.js' }, function () { window.close();});
             });
         }, false);
+        // Uncomment to debug
+        //var saveButton = document.getElementById('SaveSettings');
+        //saveButton.addEventListener('click', function () {
+        //    var g = getUserValues();   // get user's choices
+        //    setSettings(g);            // save user choices for next time
+        //}, false);
+        //var getButton = document.getElementById('GetSettings');
+        //getButton.addEventListener('click', function () {
+        //    getSettings()
+        //        .then(function (settings) {
+        //            document.getElementById('storageDisplay').innerText = JSON.stringify(settings);
+        //        })
+        //}, false);
     }, false);
 
 
     // Get user's last settings from storage - if they exist. Then
     // fill those values - or defaults, if the values do not exist -
     // into the text boxes to show user.
-    getSettings
+    getSettings()
         .then(function (settings) {
             fillSettings(settings);
         })
