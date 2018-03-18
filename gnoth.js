@@ -1,5 +1,8 @@
+// 2017 Matthew Nicholson Beer
+// MIT License: see license file for more detail
 (function () {
 
+    // storage key
     var key = 'lastSettings';
 
     var fillDefaultSettings = function (settings) {
@@ -24,7 +27,6 @@
                     // fill in with default values if previous user choices
                     // do not exist
                     settings = fillDefaultSettings(result.lastSettings || {});
-                    //alert(JSON.stringify(settings));
                     resolve(settings);
                 });
             }
@@ -51,12 +53,9 @@
     var setSettings = function (newSettings) {
         if (chrome.storage) {
             chrome.storage.sync.set({ 'lastSettings': newSettings }, function () {
-                //alert(JSON.stringify(newSettings));
                 if (chrome.runtime.error) {
-                    alert("Runtime error.");
                     console.log("Runtime error.");
                 }
-                //console.log('Value is set to ' + JSON.stringify(newSettings));
             });
         }
     };

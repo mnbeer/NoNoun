@@ -3,22 +3,65 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <title>Gnoth</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="gnoth.css" />
 </head>
 <body>
-    <div>Replace "he" with</div>
-    <div><input id="HeReplacement" type="text" value="o" /></div>
-    <div>Replace "she" with</div>
-    <div><input id="SheReplacement" type="text" value="o" /></div>
-    <div>Replace "him" with</div>
-    <div><input id="HimReplacement" type="text" value="om" /></div>
-    <div>Replace "her" with</div>
-    <div><input id="HerReplacement" type="text" value="om" /></div>
-    <div>Replace "his" with</div>
-    <div><input id="HisReplacement" type="text" value="oz" /></div>
-    <div>Replace "hers" with</div>
-    <div><input id="HersReplacement" type="text" value="oz" /></div>
-    <button id="GoGnothButton">Go!</button>
+    <nav class="navbar fixed-top navbar-light">
+        <span class="navbar-text">
+            Make this page gender-neutral?
+        </span>
+    </nav>
+    <div class="container-fluid">
+        <form>
+            <div class="form-group row">
+                <label for="HeReplacement" class="col-sm-9 col-form-label fifty-percent">Replace "he" with</label>
+                <div class="col-sm-3 fifty-percent">
+                    <input type="text" value="o" class="form-control form-control-sm input-xsmall" id="HeReplacement" placeholder="Enter replacement for 'he' ...">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="SheReplacement" class="col-sm-9 col-form-label fifty-percent">Replace "she" with</label>
+                <div class="col-sm-3 fifty-percent">
+                    <input id="SheReplacement" class="form-control form-control-sm" type="text" value="o" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="HimReplacement" class="col-sm-9 col-form-label fifty-percent">Replace "him" with</label>
+                <div class="col-sm-3 fifty-percent">
+                    <input id="HimReplacement" class="form-control form-control-sm" type="text" value="o" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="HerReplacement" class="col-sm-9 col-form-label fifty-percent">Replace "her" with</label>
+                <div class="col-sm-3 fifty-percent">
+                    <input id="HerReplacement" class="form-control form-control-sm" type="text" value="o" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="HisReplacement" class="col-sm-9 col-form-label fifty-percent">Replace "his" with</label>
+                <div class="col-sm-3 fifty-percent">
+                    <input id="HisReplacement" class="form-control form-control-sm" type="text" value="o" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="HersReplacement" class="col-sm-9 col-form-label fifty-percent">Replace "hers" with</label>
+                <div class="col-sm-3 fifty-percent">
+                    <input id="HersReplacement" class="form-control form-control-sm" type="text" value="o" />
+                </div>
+            </div>
+            <div class="form-group row button-row">
+                <div class="col-sm-3">
+                    <button id="GoGnothButton" class="btn btn-primary">Go!</button>
+                </div>
+            </div>
+        </form>
+        <footer class="navbar-fixed-bottom">
+            <p>For more info see: <a href="https://github.com/mnbeer/gnoth">https://github.com/mnbeer/gnoth</a></p>
+        </footer>
+    </div>
     <script src="gnoth.js"></script>
     <!-- Uncomment to debug
     <span id="storageDisplay"></span>

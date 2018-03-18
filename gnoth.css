@@ -1,0 +1,28 @@
+﻿
+body
+{
+    min-width: 420px;
+    margin-top: 4.5rem;
+}
+
+.navbar-light
+{
+    background-color: #e3f2fd;
+}
+
+.col-sm-9, .col-sm-3, .col-sm-2 {
+    padding-bottom: 0 !important;
+}
+
+.form-group {
+    margin-bottom: .1rem;
+}
+
+.fifty-percent {
+    width: 50%;
+}
+
+.button-row {
+    margin-bottom: 1.5rem;
+    margin-top: 1.5rem;
+}

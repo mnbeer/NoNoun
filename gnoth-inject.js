@@ -1,4 +1,5 @@
-
+// 2017 Matthew Nicholson Beer
+// MIT License: see license file for more detail
 (function (g) {
 
 
@@ -39,9 +40,12 @@
             replacedText = replacedText.replace(/\bhim\b/g, g.him);
             replacedText = replacedText.replace(/\bHim\b/g, firstLetterToUpper(g.him));
             replacedText = replacedText.replace(/\bHIM\b/g, g.him.toUpperCase());
-            replacedText = replacedText.replace(/\bto\sher\b/g, 'to ' + g.her);
-            replacedText = replacedText.replace(/\bto\sHer\b/g, 'to ' + firstLetterToUpper(g.her));
-            replacedText = replacedText.replace(/\bto\sHER\b/g, 'to ' + g.her.toUpperCase());
+            replacedText = replacedText.replace(herObjectRexExp('her'), g.her);
+            replacedText = replacedText.replace(herObjectRexExp('Her'), firstLetterToUpper(g.her));
+            replacedText = replacedText.replace(herObjectRexExp('HER'), g.her.toUpperCase());
+            //replacedText = replacedText.replace(/\bto\sher\b/g, 'to ' + g.her);
+            //replacedText = replacedText.replace(/\bto\sHer\b/g, 'to ' + firstLetterToUpper(g.her));
+            //replacedText = replacedText.replace(/\bto\sHER\b/g, 'to ' + g.her.toUpperCase());
             replacedText = replacedText.replace(/\bhis\b/g, g.his);
             replacedText = replacedText.replace(/\bHis\b/g, firstLetterToUpper(g.his));
             replacedText = replacedText.replace(/\bHIS\b/g, g.his.toUpperCase());
@@ -58,6 +62,13 @@
 
     function firstLetterToUpper(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+    function herObjectRexExp(word) {
+        var str = '\\b' + word + '\\b(?=[:.,;:?!]|\\s[to|of|under|over|before|after|at|a|an|the|that|this])';
+        //var str = '\\b' + word + '\\b';
+        console.log(str);
+        return new RegExp(str, 'g');
     }
 
     gnothReplace(g);
