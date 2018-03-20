@@ -75,44 +75,6 @@
         return g;
     }
 
-    function inject(list) {
-
-        //helper function that returns appropriate chrome.tabs function to load resource
-        var loadByType = (type) => {
-            switch(type) {
-                case 'code' : return chrome.tabs.executeScript;
-                case 'file' : return chrome.tabs.executeScript;
-                case 'css' : return chrome.tabs.insertCSS;
-                default: throw new Error('Unsupported injection type')
-            }
-        };
-
-        var objectByType = (item) => {
-            switch(item.type) {
-                case 'code' : return { code: item.body};
-                case 'file' : return { file: item.body};
-                case 'css' : return { file: item.body};
-                default: throw new Error('Unsupported injection type')
-            }
-        };
-
-        return Promise.all(list.map(item => new Promise((resolve, reject) => {
-            chrome.tabs.executeScript(null, item, () => {
-                if (chrome.runtime.lastError) {
-                    reject(chrome.runtime.lastError);
-                } else {
-                    resolve();
-                }
-            });
-        })));
-    }
-
-    finishUp = function (result) {
-        document.getElementById("InjectionResult").innerText = result;
-        alert("finished");
-        window.close();
-    }
-
     // Add a click event to the "Go" button
     document.addEventListener('DOMContentLoaded', function () {
         var GoGnothButton = document.getElementById('GoGnothButton');
@@ -120,16 +82,25 @@
             var g = getUserValues();   // get user's choices
             setSettings(g);            // save user choices for next time
             // Now go do it!!
-            var list = [
-                { code: 'var gnoth = {}; gnoth.g = ' + JSON.stringify(g) + ';' },
-                { file: 'gnoth-inject.js', }
-            ];
-            inject(list)
-            .then(function (result) { finishUp(result); })
-            .catch(err => {
-                alert(`Error occurred: ${err}`);
-                console.error(`Error occurred: ${err}`);
-            });;
+            chrome.tabs.executeScript(null, {
+                code: 'var gnoth = {}; gnoth.g = ' + JSON.stringify(g) + ';'
+            }, function () {
+                chrome.tabs.executeScript(null, { file: 'gnoth-inject.js' }, function (result) {
+                    alert("callback");
+                    document.getElementById("InjectionResult").innerText = result;
+                    if (chrome.runtime.lastError) {
+                        debugger;
+                        alert("failure");
+                        var errorMsg = chrome.runtime.lastError.message
+                        console.log(errorMsg);
+                        alert(errorMsg);
+                    }
+                    else {
+                        alert("Succes");
+                        window.close();
+                    }
+                });
+            });
         }, false);
         // Uncomment to debug
         //var saveButton = document.getElementById('SaveSettings');
@@ -145,7 +116,6 @@
         //        })
         //}, false);
     }, false);
-
 
 
     // Get user's last settings from storage - if they exist. Then
