@@ -5,6 +5,10 @@
     // storage key
     var key = 'lastSettings';
 
+    var stripNonLetters = function (str) {
+        return str.replace(/[^a-zA-Z]/, "");
+    }
+
     var fillDefaultSettings = function (settings) {
         settings.he = settings.he || "o";
         settings.she = settings.she || "o";
@@ -72,29 +76,15 @@
             he: heReplacement, him: himReplacement, his: hisReplacement,
             she: sheReplacement, her: herReplacement, hers: hersReplacement,
         };
+        // Don't allow users to input numbers, spaces, or special characters - letters only
+        Object.keys(g).forEach(function (key) {
+            g[key] = stripNonLetters(g[key]);
+        });
         return g;
     }
 
+    // Execuate a list of code snippets and javascript files
     function inject(list) {
-
-        //helper function that returns appropriate chrome.tabs function to load resource
-        var loadByType = (type) => {
-            switch(type) {
-                case 'code' : return chrome.tabs.executeScript;
-                case 'file' : return chrome.tabs.executeScript;
-                case 'css' : return chrome.tabs.insertCSS;
-                default: throw new Error('Unsupported injection type')
-            }
-        };
-
-        var objectByType = (item) => {
-            switch(item.type) {
-                case 'code' : return { code: item.body};
-                case 'file' : return { file: item.body};
-                case 'css' : return { file: item.body};
-                default: throw new Error('Unsupported injection type')
-            }
-        };
 
         return Promise.all(list.map(item => new Promise((resolve, reject) => {
             chrome.tabs.executeScript(null, item, () => {
@@ -145,8 +135,6 @@
         //        })
         //}, false);
     }, false);
-
-
 
     // Get user's last settings from storage - if they exist. Then
     // fill those values - or defaults, if the values do not exist -
