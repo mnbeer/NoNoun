@@ -1,9 +1,11 @@
-// 2017 Matthew Nicholson Beer
+// 2018 Matthew Nicholson Beer
 // MIT License: see license file for more detail
 (function () {
 
     // storage key
     var key = 'lastSettings';
+
+    var me = window;
 
     var stripNonLetters = function (str) {
         return str.replace(/[^a-zA-Z]/, "");
@@ -98,15 +100,30 @@
     }
 
     finishUp = function (result) {
-        document.getElementById("InjectionResult").innerText = result;
-        alert("finished");
         window.close();
+        //document.getElementById("InjectionResult").innerText = result;
+        //setTimeout(function () {
+        //    chrome.extension.getViews({ type: "popup" }).forEach(function (win) {
+        //        win.close()
+        //    }, 2000);
+        //});
     }
+
+    // Listen for injected code to report that it is done
+    chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+        //alert("message");
+        if (message.text === "done") {
+            window.close();
+        }
+    });
 
     // Add a click event to the "Go" button
     document.addEventListener('DOMContentLoaded', function () {
         var GoGnothButton = document.getElementById('GoGnothButton');
         GoGnothButton.addEventListener('click', function () {
+            console.log("Starting...")
+            var spinner = document.getElementById("WaitSpinner");
+            spinner.style.visibility = "visible";
             var g = getUserValues();   // get user's choices
             setSettings(g);            // save user choices for next time
             // Now go do it!!
@@ -115,8 +132,9 @@
                 { file: 'gnoth-inject.js', }
             ];
             inject(list)
-            .then(function (result) { finishUp(result); })
+            .then(function (result) { spinner.style.visibility = "hidden"; })
             .catch(err => {
+                spinner.style.visibility = "hidden";
                 alert(`Error occurred: ${err}`);
                 console.error(`Error occurred: ${err}`);
             });;

@@ -22,6 +22,12 @@ function gnothReplace(g) {
             }
         }
     }
+    setTimeout(function () {
+        chrome.runtime.sendMessage({ text: "done" }, function (response) {
+               // console.log("confirmation received: " + response.text);
+               //console.log("response");
+            });
+    }, 1000); 
     console.log("Gnoth replacements done.");
 }
 
