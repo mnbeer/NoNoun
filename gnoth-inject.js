@@ -22,9 +22,11 @@ function gnothReplace(g) {
             }
         }
     }
+    // This message doesn't get delivered until the background js
+    // finishes its stuff. So we put in a delay here.
     setTimeout(function () {
         chrome.runtime.sendMessage({ text: "done" }, function (response) {
-               // console.log("confirmation received: " + response.text);
+               // uncomment to debug
                //console.log("response");
             });
     }, 1000); 

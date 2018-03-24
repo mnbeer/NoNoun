@@ -7,6 +7,9 @@
 
     var me = window;
 
+    var closeWin = document.getElementById("CloseIcon");
+    closeWin.addEventListener('click', function () { window.close(); });
+
     var stripNonLetters = function (str) {
         return str.replace(/[^a-zA-Z]/, "");
     }
@@ -101,19 +104,12 @@
 
     finishUp = function (result) {
         window.close();
-        //document.getElementById("InjectionResult").innerText = result;
-        //setTimeout(function () {
-        //    chrome.extension.getViews({ type: "popup" }).forEach(function (win) {
-        //        win.close()
-        //    }, 2000);
-        //});
     }
 
     // Listen for injected code to report that it is done
     chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-        //alert("message");
         if (message.text === "done") {
-            window.close();
+            finishUp();
         }
     });
 
@@ -132,7 +128,7 @@
                 { file: 'gnoth-inject.js', }
             ];
             inject(list)
-            .then(function (result) { spinner.style.visibility = "hidden"; })
+            .then(function (result) {spinner.style.visibility = "hidden"; })
             .catch(err => {
                 spinner.style.visibility = "hidden";
                 alert(`Error occurred: ${err}`);

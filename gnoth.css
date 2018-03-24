@@ -26,3 +26,11 @@ body
     margin-bottom: 1.5rem;
     margin-top: 1.5rem;
 }
+
+span.fa {
+    color: #007bff;
+}
+
+.clickable:hover {
+    cursor: pointer;
+}
