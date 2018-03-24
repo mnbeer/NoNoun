@@ -125,7 +125,8 @@
             // Now go do it!!
             var list = [
                 { code: 'var gnoth = {}; gnoth.g = ' + JSON.stringify(g) + ';' },
-                { file: 'gnoth-inject.js', }
+                { file: 'words.js' },
+                { file: 'gnoth-inject.js'}
             ];
             inject(list)
             .then(function (result) {spinner.style.visibility = "hidden"; })

@@ -1,6 +1,10 @@
 // 2017 Matthew Nicholson Beer
 // MIT License: see license file for more detail
 
+var articlesList = articles.join("|");
+var adverbList = irregularAdverbs.join("|");
+var prepositionList = prepositions.join("|");
+var possessivesList = possessives.join("|");
 
 function gnothReplace(g) {
     JSON.stringify(g);
@@ -73,7 +77,10 @@ function firstLetterToUpper(string) {
 }
 
 function herObjectRexExp(word) {
-    var str = '\\b' + word + '\\b(?=[:.,;:?!]|\\s[to|of|under|over|before|after|at|a|an|the|that|this])';
+    // to|of|under|over|before|after|at|a|an|the|that|this|now
+    // var str = '\\b' + word + '\\b(?=[:.,;:?!]|\\s\\b(to|of|under|ove{r|before|after|at|a|an|the|that|this|now)|\\s\\b[a-zA-Z\\-]+ly\\b)';
+
+    var str = `\\b${word}\\b(?=[:.,;:?!]|\\s\\b(${articlesList}|${possessivesList}|$prepositionList}|${adverbList})|\\s\\b[a-zA-Z\\-]+ly\\b)`;
     return new RegExp(str, 'g');
 }
 
