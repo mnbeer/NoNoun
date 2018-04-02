@@ -3,7 +3,7 @@
 
   "name": "Gender Neutral 3rd Party Pronoun Plug-In",
   "description": "This extension replaces all instances of gender specific pronouns (he/she), objects (him/her), and possessives (his/hers) with gender neutral alternatives. [Engish language only.]",
-  "version": "1.0",
+  "version": "0.0.0.1",
 
   "browser_action": {
     "default_icon": "icon16.png",

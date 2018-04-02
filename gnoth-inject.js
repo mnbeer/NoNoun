@@ -1,4 +1,4 @@
-// 2017 Matthew Nicholson Beer
+// 2018 Matthew Nicholson Beer
 // MIT License: see license file for more detail
 
 var articlesList = articles.join("|");

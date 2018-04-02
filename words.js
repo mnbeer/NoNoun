@@ -1,3 +1,5 @@
+// 2018 Matthew Nicholson Beer
+// MIT License: see license file for more detail
 var articles = ['a', 'an', 'the'];
 
 var irregularAdverbs = ['almost',
