@@ -6,7 +6,7 @@ var adverbList = irregularAdverbs.join("|");
 var prepositionList = prepositions.join("|");
 var possessivesList = possessives.join("|");
 
-function gnothReplace(g) {
+function noNounReplace(g) {
     JSON.stringify(g);
     var elements = document.getElementsByTagName('*');
 
@@ -18,7 +18,7 @@ function gnothReplace(g) {
 
             if (node.nodeType === 3) {
                 var text = node.nodeValue;
-                var replacedText = gnothReplaceOne(g, text);
+                var replacedText = noNounReplaceOne(g, text);
 
                 if (replacedText !== text) {
                     element.replaceChild(document.createTextNode(replacedText), node);
@@ -34,10 +34,10 @@ function gnothReplace(g) {
                //console.log("response");
             });
     }, 1000); 
-    console.log("Gnoth replacements done.");
+    console.log("NoNoun replacements done.");
 }
 
-function gnothReplaceOne(g, text) {
+function noNounReplaceOne(g, text) {
     var replacedText = text;
     //alert(text + " " + g.he);
     if (g.he) {
@@ -84,5 +84,5 @@ function herObjectRexExp(word) {
     return new RegExp(str, 'g');
 }
 
-gnothReplace(gnoth.g);
+noNounReplace(noNoun.g);
 "OK";

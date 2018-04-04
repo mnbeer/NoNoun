@@ -11,7 +11,7 @@ If (Test-Path $destination){
 	Remove-Item $destination
 }
 # Exclude these files and folders from the distrubution package
-$exclude = @(".gitignore","Dist","Exclude", "Test", "Prepare")
+$exclude = @(".gitignore","Dist","Exclude", "Test", "Prepare", "Help")
 # get files to zip
 $files = Get-ChildItem -Path $path -Exclude $exclude
 # compress

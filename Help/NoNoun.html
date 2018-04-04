@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>NoNoun</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css" integrity="sha384-v2Tw72dyUXeU3y4aM2Y0tBJQkGfplr39mxZqlTBDUZAb9BGoC40+rdFCG0m10lXk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/fontawesome.css" integrity="sha384-q3jl8XQu1OpdLgGFvNRnPdj5VIlCvgsDQTQB6owSOHWlAurxul7f+JpUOVdAiJ5P" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/nonoun.css" />
+</head>
+<body>
+    <div class="container">
+        <div class="width: 100%">
+            <h1>
+                <img class="float:right" src="images/icon48.png" />
+                About NoNoun
+            </h1>
+        </div>
+        <p>
+            NoNoun is a Chrome Extension that allows you to replace gender-specific pronouns (“he”, “she”),
+            objects (“his”, “her”), and possessives (“his”, “her/hers”) with gender-neutral alternatives
+            on English language Web pages. It turns a page that looks like this:
+        </p>
+
+        <div class="large-img">
+            <img src="images/before-1100.png" />
+        </div>
+
+        <p>into a page that looks like this:</p>
+
+        <div class="large-img">
+            <img src="images/after-1100.png" />
+        </div>
+
+        <h2>How to Install</h2>
+        <p>Install from the <a target="_blank" href="https://chrome.google.com/webstore/category/extensions">Chrome Web Store.</a></p>
+
+        <h2>How to Use</h2>
+        <p>First</p>
+        <ul>
+            <li>Make sure you are using the Chrome browser. At this time, NoNoun does not
+            work in other browsers.</li>
+            <li>Install the NoNoun Chrome extension (see instructions above).</li>
+            <li>Go to a Web Page you want to make gender neutral.</li>
+        </ul>
+        <p>Click the NoNoun icon in the Chrome menu bar.</p>
+        <div class="large-img img-inset">
+            <img src="images/icon-in-context.png" />
+        </div>
+        <p>Choose what substitutions you would like to make (or leave as is to 
+        accept defaults). Then click "Go".</p>
+        <div class="large-img img-inset">
+            <img src="images/nonoun-snapshot.png" />
+        </div>        
+        <h2>The Her/Her Problem<a name="HisHerProblem"></a></h2>
+        <p>
+            NoNoun uses simple pattern matches to make replacements. This can lead to mistakes with the word “her”,
+            which is sometimes an object (“I talked to her.”) and sometimes a possessive (“I talked to her mother.”).
+        </p>
+
+        <h2>Questions & Answers</h2>
+        
+        <div class="question">Can I control what gender-neutral words to use?</div>
+
+        <p>
+            Yes. By default, NoNoun uses “o” for “he” and “she”, “om” for “him” and “her”,
+            and “oz” for “his” and “hers”. But you can specify any words you like.
+        </p>
+
+        <div class="question">Can I control which gender-specific words to replace?</div>
+
+        <p>
+            Yes. For example, you may decide that because “she”, “her”, and “hers” are rarely used in
+            gender-neutral ways, you want to replace “he”, “him”, and “his”, but leave “she”, “her”,
+            and “hers” alone. To do this, leave the replacement boxes for the words to leave alone empty.
+            Or, fill the replacement boxes with the same value (replace “her” with “her”).
+        </p>
+
+        <h3>Disclaimers</h3>
+        <ul>
+            <li>
+                NoNoun uses simple pattern matching for replacements. It may make mistakes. It may
+                miss some locations or accidentally act on some locations it shouldn't.
+                See the <a href="#HisHerProblem">her/her problem</a> as one other potential issue.
+            </li>
+            <li>
+                NoNoun may not work on misbehaving Web pages (pages that generate errors that are
+                often not seen by the reader).
+            </li>
+        </ul>
+
+
+        <h3>Other</h3>
+        <ul>
+            <li><a href="https://github.com/mnbeer/NoNoun"><img src="images/GitHub-Mark-32px.png" />&nbsp;Source code on GitHub</a></li>
+            <!--<li>Email for comments/feedback?</li>-->
+            <li>Learn more about <a target="_blank" href="https://developer.chrome.com/extensions">Chrome Extensions</a></li>
+        </ul>
+
+    </div>
+</body>
+</html>

@@ -115,8 +115,8 @@
 
     // Add a click event to the "Go" button
     document.addEventListener('DOMContentLoaded', function () {
-        var GoGnothButton = document.getElementById('GoGnothButton');
-        GoGnothButton.addEventListener('click', function () {
+        var GoNoNounButton = document.getElementById('GoNoNounButton');
+        GoNoNounButton.addEventListener('click', function () {
             console.log("Starting...")
             var spinner = document.getElementById("WaitSpinner");
             spinner.style.visibility = "visible";
@@ -124,9 +124,9 @@
             setSettings(g);            // save user choices for next time
             // Now go do it!!
             var list = [
-                { code: 'var gnoth = {}; gnoth.g = ' + JSON.stringify(g) + ';' },
+                { code: 'var noNoun = {}; noNoun.g = ' + JSON.stringify(g) + ';' },
                 { file: 'words.js' },
-                { file: 'gnoth-inject.js'}
+                { file: 'nonoun-inject.js'}
             ];
             inject(list)
             .then(function (result) {spinner.style.visibility = "hidden"; })
