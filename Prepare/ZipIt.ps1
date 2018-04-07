@@ -15,4 +15,4 @@ $exclude = @(".gitignore","Dist","Exclude", "Test", "Prepare", "Help")
 # get files to zip
 $files = Get-ChildItem -Path $path -Exclude $exclude
 # compress
-Compress-Archive -Path $files -DestinationPath $destination
+Compress-Archive -Path $files -DestinationPath $destination -Force
