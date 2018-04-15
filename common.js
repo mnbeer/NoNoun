@@ -36,7 +36,8 @@ var fillDefaultSettings = function (settings) {
     settings.him = settings.him || "om";
     settings.her = settings.her || "om";
     settings.his = settings.his || "oz";
-    settings.hers = settings.hers || "her";
+    settings.hers = settings.hers || "oz";
+    settings.rules = [{ run: "yes", url: "en.wikipedia.org/wiki/RuPaul" }];
     return settings;
 }
 
@@ -65,7 +66,6 @@ function noNounReplace(g) {
 
 function noNounReplaceOne(g, text) {
     var replacedText = text;
-    //alert(text + " " + g.he);
     if (g.he) {
         //var regex = new RegExp("\b" + g.he + "\b", "ig");
         //replacedText = text.replace(regext, g.he);
@@ -94,7 +94,6 @@ function noNounReplaceOne(g, text) {
         replacedText = replacedText.replace(/\bHers?\b/g, firstLetterToUpper(g.hers));
         replacedText = replacedText.replace(/\bHERS?\b/g, g.hers.toUpperCase());
     }
-    //alert(replacedText);
     return replacedText;
 }
 
@@ -103,9 +102,6 @@ function firstLetterToUpper(string) {
 }
 
 function herObjectRexExp(word) {
-    // to|of|under|over|before|after|at|a|an|the|that|this|now
-    // var str = '\\b' + word + '\\b(?=[:.,;:?!]|\\s\\b(to|of|under|ove{r|before|after|at|a|an|the|that|this|now)|\\s\\b[a-zA-Z\\-]+ly\\b)';
-
     var str = `\\b${word}\\b(?=[:.,;:?!]|\\s\\b(${articlesList}|${possessivesList}|$prepositionList}|${adverbList})|\\s\\b[a-zA-Z\\-]+ly\\b)`;
     return new RegExp(str, 'g');
 }
