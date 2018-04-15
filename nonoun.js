@@ -106,6 +106,41 @@
         window.close();
     }
 
+    go = function () {
+        console.log("Starting...")
+        var spinner = document.getElementById("WaitSpinner");
+        spinner.style.visibility = "visible";
+        var g = getUserValues();   // get user's choices
+        setSettings(g);            // save user choices for next time
+        // Now go do it!!
+        var list = [
+            { code: 'var noNoun = {}; noNoun.g = ' + JSON.stringify(g) + ';' },
+            { file: 'words.js' },
+            { file: 'nonoun-inject.js'}
+        ];
+        inject(list)
+        .then(function (result) {spinner.style.visibility = "hidden"; })
+        .catch(err => {
+            spinner.style.visibility = "hidden";
+            alert(`Error occurred: ${err}`);
+            console.error(`Error occurred: ${err}`);
+        });
+    // Uncomment to debug
+    //var saveButton = document.getElementById('SaveSettings');
+    //saveButton.addEventListener('click', function () {
+    //    var g = getUserValues();   // get user's choices
+    //    setSettings(g);            // save user choices for next time
+    //}, false);
+    //var getButton = document.getElementById('GetSettings');
+    //getButton.addEventListener('click', function () {
+    //    getSettings()
+    //        .then(function (settings) {
+    //            document.getElementById('storageDisplay').innerText = JSON.stringify(settings);
+    //        })
+    //}, false);
+
+    }
+
     // Listen for injected code to report that it is done
     chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
         if (message.text === "done") {
@@ -117,38 +152,8 @@
     document.addEventListener('DOMContentLoaded', function () {
         var GoNoNounButton = document.getElementById('GoNoNounButton');
         GoNoNounButton.addEventListener('click', function () {
-            console.log("Starting...")
-            var spinner = document.getElementById("WaitSpinner");
-            spinner.style.visibility = "visible";
-            var g = getUserValues();   // get user's choices
-            setSettings(g);            // save user choices for next time
-            // Now go do it!!
-            var list = [
-                { code: 'var noNoun = {}; noNoun.g = ' + JSON.stringify(g) + ';' },
-                { file: 'words.js' },
-                { file: 'nonoun-inject.js'}
-            ];
-            inject(list)
-            .then(function (result) {spinner.style.visibility = "hidden"; })
-            .catch(err => {
-                spinner.style.visibility = "hidden";
-                alert(`Error occurred: ${err}`);
-                console.error(`Error occurred: ${err}`);
-            });;
+            go();
         }, false);
-        // Uncomment to debug
-        //var saveButton = document.getElementById('SaveSettings');
-        //saveButton.addEventListener('click', function () {
-        //    var g = getUserValues();   // get user's choices
-        //    setSettings(g);            // save user choices for next time
-        //}, false);
-        //var getButton = document.getElementById('GetSettings');
-        //getButton.addEventListener('click', function () {
-        //    getSettings()
-        //        .then(function (settings) {
-        //            document.getElementById('storageDisplay').innerText = JSON.stringify(settings);
-        //        })
-        //}, false);
     }, false);
 
     // Get user's last settings from storage - if they exist. Then
