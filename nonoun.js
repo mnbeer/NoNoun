@@ -2,9 +2,6 @@
 // MIT License: see license file for more detail
 (function () {
 
-    // storage key
-    var key = 'lastSettings';
-
     var me = window;
 
     var closeWin = document.getElementById("CloseIcon");
@@ -15,39 +12,6 @@
     var stripNonLetters = function (str) {
         return str.replace(/[^a-zA-Z]/, "");
     }
-
-    var fillDefaultSettings = function (settings) {
-        settings.he = settings.he || "o";
-        settings.she = settings.she || "o";
-        settings.him = settings.him || "om";
-        settings.her = settings.her || "om";
-        settings.his = settings.his || "oz";
-        settings.hers = settings.hers || "her";
-        return settings;
-    }
-
-    // get user's last choices from storage
-    var getSettings = function () {
-        return new Promise(function (resolve, reject) {
-            if (chrome.storage) {
-                chrome.storage.sync.get(key, function (result) {
-                    if (chrome.runtime.error) {
-                        alert("Runtime error.");
-                        console.log("Runtime error.");
-                    }
-                    // fill in with default values if previous user choices
-                    // do not exist
-                    settings = fillDefaultSettings(result.lastSettings || {});
-                    resolve(settings);
-                });
-            }
-            else {
-                settings = fillDefaultSettings({});
-                resolve(settings);
-            }
-        });
-    }
-
 
     // Fill text boxes with initial values. User can then
     // change those values as desired.
@@ -118,6 +82,7 @@
         var list = [
             { code: 'var noNoun = {}; noNoun.g = ' + JSON.stringify(g) + ';' },
             { file: 'words.js' },
+            { file: 'common.js'},
             { file: 'nonoun-inject.js'}
         ];
         inject(list)

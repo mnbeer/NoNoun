@@ -62,6 +62,18 @@ function noNounReplace(g) {
         }
     }
     console.log("NoNoun replacements done.");
+    // This message doesn't get delivered until the background js
+    // finishes its stuff. So we put in a delay here.
+    if (chrome && chrome.runtime) {
+        setTimeout(function () {
+               chrome.runtime.sendMessage({ text: "done" }, function (response) {
+                    // uncomment to debug
+                    //console.log("response");
+                });
+            }, 1000);
+    }
+
+    console.log("NoNoun replacements done.");
 }
 
 function noNounReplaceOne(g, text) {
