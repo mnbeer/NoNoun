@@ -8,7 +8,9 @@
     var me = window;
 
     var closeWin = document.getElementById("CloseIcon");
-    closeWin.addEventListener('click', function () { window.close(); });
+    if (closeWin) {
+        closeWin.addEventListener('click', function () { window.close(); });
+    }
 
     var stripNonLetters = function (str) {
         return str.replace(/[^a-zA-Z]/, "");
@@ -142,18 +144,23 @@
     }
 
     // Listen for injected code to report that it is done
+    if (chrome.runtime.onMessage) {
     chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-        if (message.text === "done") {
-            finishUp();
-        }
-    });
+            if (message.text === "done") {
+                finishUp();
+            }
+        });
+    }
+
 
     // Add a click event to the "Go" button
     document.addEventListener('DOMContentLoaded', function () {
         var GoNoNounButton = document.getElementById('GoNoNounButton');
-        GoNoNounButton.addEventListener('click', function () {
-            go();
-        }, false);
+        if (GoNoNounButton) {
+            GoNoNounButton.addEventListener('click', function () {
+                go();
+            }, false);
+        }
     }, false);
 
     // Get user's last settings from storage - if they exist. Then
