@@ -5,8 +5,8 @@ function runTransform(settings) {
     var url = window.location.href.toLowerCase();
     for (var ii = 0; ii < settings.rules.length; ii++) {
         rule = settings.rules[ii];
-        ruleUrl = settings.rule.toLowerCase();
-        if (ruleUrl = "[all]" || url.indexOf(ruleUrl) >= 0) {
+        ruleUrl = rule.url.toLowerCase();
+        if (ruleUrl === "[all]" || url.indexOf(ruleUrl) >= 0) {
             if (rule.run === "no") {
                 return false;
             }

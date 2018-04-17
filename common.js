@@ -37,7 +37,8 @@ var fillDefaultSettings = function (settings) {
     settings.her = settings.her || "om";
     settings.his = settings.his || "oz";
     settings.hers = settings.hers || "oz";
-    settings.rules = [{ run: "yes", url: "en.wikipedia.org/wiki/RuPaul" }];
+    //settings.rules = [{ run: "yes", url: "en.wikipedia.org/wiki/RuPaul" }];
+    settings.rules = [{ run: "no", url: "washingtonpost.com" }, { run: "no", url: "Vox.com" }, { run: "yes", url: "[All]" }];
     return settings;
 }
 
