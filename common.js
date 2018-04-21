@@ -37,8 +37,9 @@ var fillDefaultSettings = function (settings) {
     settings.her = settings.her || "om";
     settings.his = settings.his || "oz";
     settings.hers = settings.hers || "oz";
-    //settings.rules = [{ run: "yes", url: "en.wikipedia.org/wiki/RuPaul" }];
-    settings.rules = [{ run: "no", url: "washingtonpost.com" }, { run: "no", url: "Vox.com" }, { run: "yes", url: "[All]" }];
+    settings.auto = "off";
+    //settings.urls = ["en.wikipedia.org/wiki/RuPaul"];
+    settings.urls = [ "washingtonpost.com", "Vox.com" ];
     return settings;
 }
 
@@ -73,8 +74,6 @@ function noNounReplace(g) {
                 });
             }, 1000);
     }
-
-    console.log("NoNoun replacements done.");
 }
 
 function noNounReplaceOne(g, text) {
