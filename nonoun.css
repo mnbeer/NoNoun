@@ -5,12 +5,16 @@ body
     margin-top: 4.5rem;
 }
 
+input[type=radio] {
+    margin-right: 5px;
+}
+
 .navbar-light
 {
     background-color: #e3f2fd;
 }
 
-.col-sm-9, .col-sm-3, .col-sm-2 {
+.col-sm-12, .col-sm-9, .col-sm-3, .col-sm-2 {
     padding-bottom: 0 !important;
 }
 
@@ -33,4 +37,8 @@ span.fa {
 
 .clickable:hover {
     cursor: pointer;
+}
+
+footer {
+    margin-top: 10px;
 }

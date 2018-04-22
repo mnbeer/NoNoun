@@ -118,14 +118,15 @@
     }
 
 
-    // Add a click event to the "Go" button
     document.addEventListener('DOMContentLoaded', function () {
+        // Add a click event to the "Go" button
         var GoNoNounButton = document.getElementById('GoNoNounButton');
         if (GoNoNounButton) {
             GoNoNounButton.addEventListener('click', function () {
                 go();
             }, false);
         }
+
     }, false);
 
     // Get user's last settings from storage - if they exist. Then
