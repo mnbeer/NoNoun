@@ -13,6 +13,25 @@
         return str.replace(/[^a-zA-Z]/, "");
     }
 
+    var createUrlBox = function() {
+        var inputBox = document.createElement("input");
+        inputBox.type = "text";
+        inputBox.name = "exceptionUrl";
+        inputBox.className = "form-control form-control-sm";
+        inputBox.placeholder = "Type in full or partial address"
+        inputBox.addEventListener('blur', function () {
+            saveUserSettings();
+        }, false);
+        return inputBox;
+    }
+
+    var appendUrlBox = function(value) {
+        var urlList = document.getElementById("UrlList");
+        var newBox = createUrlBox();
+        newBox.value = value;
+        urlList.appendChild(newBox);
+    }
+
     // Fill text boxes with initial values. User can then
     // change those values as desired.
     var fillSettings = function(settings) {
@@ -23,6 +42,10 @@
         document.getElementById('HisReplacement').value = settings.his;
         document.getElementById('HersReplacement').value = settings.hers;
         document.querySelector('input[name="auto"][value=' + settings.auto + ']').checked = true;
+        settings.urls.forEach(function (url) {
+            appendUrlBox(url);
+        });
+        appendUrlBox("");
     }
 
     // store the user's choices for next time
@@ -45,15 +68,23 @@
         var hisReplacement = document.getElementById('HisReplacement').value;
         var hersReplacement = document.getElementById('HersReplacement').value;
         var auto = document.querySelector('input[name="auto"]:checked').value;
+        var urls = []
+        var inputUrls = document.getElementsByName('exceptionUrl');
+        inputUrls.forEach(function (inputBox) {
+            if (inputBox.value.length > 0) {
+                urls.push(inputBox.value);
+            }
+        });
         var g = {
             he: heReplacement, him: himReplacement, his: hisReplacement,
             she: sheReplacement, her: herReplacement, hers: hersReplacement,
-            auto: auto
         };
         // Don't allow users to input numbers, spaces, or special characters - letters only
         Object.keys(g).forEach(function (key) {
             g[key] = stripNonLetters(g[key]);
         });
+        g.autom = auto;
+        g.urls = urls;
         return g;
     }
 
@@ -78,13 +109,14 @@
     saveUserSettings = function () {
         var g = getUserValues();   // get user's choices
         setSettings(g);         // save user choices for next time
+        return g;
     }
 
     go = function () {
         console.log("Starting...")
         var spinner = document.getElementById("WaitSpinner");
         spinner.style.visibility = "visible";
-        saveUserSettings();
+        var g = saveUserSettings();
         // Now go do it!!
         var list = [
             { code: 'var noNoun = {}; noNoun.g = ' + JSON.stringify(g) + ';' },

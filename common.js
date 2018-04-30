@@ -38,8 +38,9 @@ var fillDefaultSettings = function (settings) {
     settings.his = settings.his || "oz";
     settings.hers = settings.hers || "oz";
     settings.auto = settings.auto || "off";
+    settings.urls = settings.urls || [];
     //settings.urls = ["en.wikipedia.org/wiki/RuPaul"];
-    settings.urls = [ "washingtonpost.com", "Vox.com" ];
+    //settings.urls = [ "washingtonpost.com", "Vox.com" ];
     return settings;
 }
 
