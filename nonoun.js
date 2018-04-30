@@ -22,6 +22,7 @@
         document.getElementById('HerReplacement').value = settings.her;
         document.getElementById('HisReplacement').value = settings.his;
         document.getElementById('HersReplacement').value = settings.hers;
+        document.querySelector('input[name="auto"][value=' + settings.auto + ']').checked = true;
     }
 
     // store the user's choices for next time
@@ -43,9 +44,11 @@
         var herReplacement = document.getElementById('HerReplacement').value;
         var hisReplacement = document.getElementById('HisReplacement').value;
         var hersReplacement = document.getElementById('HersReplacement').value;
+        var auto = document.querySelector('input[name="auto"]:checked').value;
         var g = {
             he: heReplacement, him: himReplacement, his: hisReplacement,
             she: sheReplacement, her: herReplacement, hers: hersReplacement,
+            auto: auto
         };
         // Don't allow users to input numbers, spaces, or special characters - letters only
         Object.keys(g).forEach(function (key) {
@@ -72,12 +75,16 @@
         window.close();
     }
 
+    saveUserSettings = function () {
+        var g = getUserValues();   // get user's choices
+        setSettings(g);         // save user choices for next time
+    }
+
     go = function () {
         console.log("Starting...")
         var spinner = document.getElementById("WaitSpinner");
         spinner.style.visibility = "visible";
-        var g = getUserValues();   // get user's choices
-        setSettings(g);            // save user choices for next time
+        saveUserSettings();
         // Now go do it!!
         var list = [
             { code: 'var noNoun = {}; noNoun.g = ' + JSON.stringify(g) + ';' },
@@ -109,7 +116,7 @@
     }
 
     // Listen for injected code to report that it is done
-    if (chrome.runtime.onMessage) {
+    if (chrome.runtime && chrome.runtime.onMessage) {
     chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
             if (message.text === "done") {
                 finishUp();
@@ -126,6 +133,18 @@
                 go();
             }, false);
         }
+        var autoButtons = document.getElementsByName("auto");
+        autoButtons.forEach(function (button) {
+            button.addEventListener('change', function () {
+                saveUserSettings();
+            }, false);
+        });
+        var textBoxes = document.querySelectorAll("[id$=Replacement]");
+        textBoxes.forEach(function (textbox) {
+            textbox.addEventListener('blur', function () {
+                saveUserSettings();
+            }, false);
+        });
 
     }, false);
 
