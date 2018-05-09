@@ -20,16 +20,36 @@
         inputBox.className = "form-control form-control-sm";
         inputBox.placeholder = "Type in full or partial address"
         inputBox.addEventListener('blur', function () {
+            addUrlBoxIfNeeded();
             saveUserSettings();
         }, false);
+        //inputBox.addEventListener('keyup', function () {
+        //    alert("change");
+        //    addUrlBoxIfNeeded();
+        //}, false);
         return inputBox;
     }
 
     var appendUrlBox = function(value) {
         var urlList = document.getElementById("UrlList");
         var newBox = createUrlBox();
-        newBox.value = value;
+        newBox.value =  value === undefined ? "" : value;
         urlList.appendChild(newBox);
+    }
+
+    // Always want one empty url box user can type into
+    var addUrlBoxIfNeeded = function () {
+        if (!emptyBoxExists()) {
+            appendUrlBox();
+        }
+    }
+
+    var emptyBoxExists = function () {
+        var inputUrls = Array.from(document.getElementsByName('exceptionUrl'));
+        var exists = inputUrls.find(function (element) {
+            return element.value.length === 0;
+        });
+        return exists !== undefined;
     }
 
     // Fill text boxes with initial values. User can then
