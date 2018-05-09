@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "NoNoun: Gender Neutral 3rd Person Plug-In",
   "description": "Replace gender specific pronouns (he/she), objects (him/her), and possessives (his/hers) with gender neutral alternatives.",
-  "version": "0.0.1.0",
+  "version": "0.0.1.1",
   "browser_action": {
     "default_icon": "icon16.png",
     "default_popup": "nonoun.html"

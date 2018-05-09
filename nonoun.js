@@ -103,7 +103,7 @@
         Object.keys(g).forEach(function (key) {
             g[key] = stripNonLetters(g[key]);
         });
-        g.autom = auto;
+        g.auto = auto;
         g.urls = urls;
         return g;
     }
