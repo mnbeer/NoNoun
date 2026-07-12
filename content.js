@@ -1,27 +1,27 @@
 // 2018 Matthew Nicholson Beer
 // MIT License: see license file for more detail
 
-function runTransform(settings) {
-    if (settings.auto === "manual") {
-        // do not run now; wait for user to explicitly run
-        return false;
-    }
-    var currentUrl = window.location.href.toLowerCase();
-    // see if item is in the exception list
-    var found = settings.urls.find(function (url) {
-        return currentUrl.indexOf(url.toLowerCase()) >= 0;
-    });
-    if (found && settings.auto === "off") {
-        return true;
-    } else if (!found && settings.auto === "on") {
-        return true;
-    }
+function shouldRunTransform(settings) {
+    if (settings.auto === 'manual') return false;
+    const currentUrl = window.location.href.toLowerCase();
+    const matchesUrl = settings.urls.some(url => currentUrl.includes(url.toLowerCase()));
+    // auto="on":  run everywhere EXCEPT the listed URLs
+    // auto="off": run ONLY ON the listed URLs
+    if (settings.auto === 'on')  return !matchesUrl;
+    if (settings.auto === 'off') return matchesUrl;
     return false;
 }
 
-getSettings()
-    .then(function (settings) {
-        if (runTransform(settings)) {
-            noNounReplace(settings);
-        }
-    })
+// Allow the popup's "Go!" button to trigger a replacement with fresh settings
+chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
+    if (message.action === 'replace') {
+        noNounReplace(message.settings);
+        sendResponse({ done: true });
+    }
+});
+
+getSettings().then(settings => {
+    if (shouldRunTransform(settings)) {
+        noNounReplace(settings);
+    }
+});
